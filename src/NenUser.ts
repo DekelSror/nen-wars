@@ -10,7 +10,7 @@ class NenUser {
     auraTypes: {[k: string]: AuraType}
     
     aura = 5
-    balance = 100
+    balance = 100 // belongs to player
 
 
     constructor(name: string, auraTypeAffinity: AuraTypeName) {
@@ -20,7 +20,10 @@ class NenUser {
         this.auraTypes = makeAuraTypes()
     }
 
-    
+    calculateBattleResult(didIWin: boolean) {
+
+    }
+
     get skillables() {
         return Object.values(this.skills).filter(s => this.basesCovered(s.name))
     }
@@ -52,6 +55,12 @@ class NenUser {
         this.aura -= this.totalAuraCost
         return this
     }
+    
+    activateSkill(skillName: NenSkillName) {
+        this.skills[skillName].active = true
+
+        return this
+    }
 
     skillInto(skillName: NenSkillName, cost: number) {
         if (cost > this.balance) {
@@ -79,11 +88,6 @@ class NenUser {
         return this
     }
 
-    activateSkill(skillName: NenSkillName) {
-        this.skills[skillName].active = true
-
-        return this
-    }
 
 }
 

@@ -4,6 +4,7 @@ import { AuraTypeSkilling } from './AuraTypeSkilling';
 import nenDetails from './NenDetails';
 import { Skilling } from './NenSkilling';
 import NenUser, { copy } from './NenUser';
+import SimpleEnemy from './SimpleEnemy';
 
 
 const AuraTypesDisplay = () => {
@@ -17,14 +18,25 @@ const AuraTypesDisplay = () => {
     </div>
 }
 
+// const user = new NenUser('Steve', 'enhancement')
+// const enemy = new SimpleEnemy()
+
+
 const App = () => {
+    // const [battle, setBattle] = useState(engine.battle(user, enemy.nenUser, ... ))
+    
+
     const [user, _setUser] = useState(new NenUser('Steve', 'enhancement'))
+    const [enemy, _setEnemy] = useState(new SimpleEnemy())
+
     const [battling, setBattling] = useState(false)
+    const [turn, setTurn] = useState(0)
 
     // this is not the way to manage state :)
     const setUser = (u: NenUser) => {
         _setUser(copy(u))
     }
+
     
     return <div style={{width: '70%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, gap: 10}}>
         {!battling && <div >
