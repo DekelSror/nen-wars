@@ -13,20 +13,13 @@ const Skilling = (props: {user: NenUser, setUser: (u: NenUser) => void}) => {
         setUser(user.skillInto(skill.name, 10))
     }
     
-    return <div>
-         <div style={{display: 'flex', flexDirection: 'row'}}>
-            <span style={{marginRight: 15}}>NenUser: {user.name}</span>
-            <span>balance: {user.balance}</span>
-        </div>
-
-        {/* SKILL TREE  */}
+    return <div style={{padding: 10}}>
+        <h4> Nen Skills </h4>
         <div style={{display: 'flex', flexDirection: 'row'}}>
             {user.skillables.map((s, i) => {
-
+                
                 return <div key={i} style={{display: 'flex', flexDirection: 'column', gap: 5}}>
                     <div> {s.name} </div>
-
-                    
                     <div style={{paddingLeft: 5}}> {s.rank} </div>
                     <div style={{paddingLeft: 5, paddingRight: 10}}> {s.costPerRound} </div>
                     <button onClick={() => onSkillInto(s)} > upgrade (10) </button>
@@ -42,12 +35,13 @@ const AuraTypeSkilling = (props: {user: NenUser, setUser: (u: NenUser) => void})
 
     const eff = nenDetails.auraTypeEffectiveness(user.auraTypeAffinity)
 
-    return <div>
+    return <div style={{display: 'flex', flexDirection: 'column', gap: 10, padding: 10}}>
+        <h4>Aura Type Proficiency</h4>
         {Object.values(user.auraTypes).map(auraType => {
 
             return <div 
                 key={auraType.name} 
-                style={{display: 'flex', gap: 15}}
+                style={{display: 'flex', gap: 15, border: '1px solid grey'}}
                 onClick={() => setUser(user.upgradeAuraType(auraType.name, 10))}
             >
                 <div> {auraType.name} | {auraType.rank} </div>
@@ -71,23 +65,29 @@ const AuraTypesDisplay = () => {
 
 const App = () => {
     const [user, _setUser] = useState(new NenUser('Steve', 'enhancement'))
+    const [battling, setBattling] = useState(false)
 
     // this is not the way to manage state :)
     const setUser = (u: NenUser) => {
         _setUser(copy(u))
     }
     
-
     return <div style={{width: '70%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, gap: 10}}>
+        {!battling && <div >
+            {/* {AuraTypesDisplay()} */}
+            <div style={{display: 'flex'}}>
+                <span style={{marginRight: 15}}>NenUser: {user.name}</span>
+                <span>balance: {user.balance}</span>
+            </div>
 
-        {AuraTypesDisplay()}
+            <Skilling user={user} setUser={setUser} />
+            <AuraTypeSkilling user={user} setUser={setUser} />
+            <button onClick={() => setBattling(true)}>Fight!</button>
+        </div>}
 
-        <Skilling user={user} setUser={setUser} />
-        <AuraTypeSkilling user={user} setUser={setUser} />
 
         {/* BATTLE PART */}
-        <div>
-            <button>Fight!</button>
+        {battling && <div style={{display: 'flex', flexDirection: 'column', gap: 10}}>
 
             <div style={{display: 'flex'}}>
                 {Object.values(user.auraTypes).map(auraType => {
@@ -138,7 +138,9 @@ const App = () => {
                 End Turn
             </button>
 
-        </div>
+            <button onClick={() => setBattling(false)}>SURRENDER</button>
+
+        </div>}
     </div>
 }
 
