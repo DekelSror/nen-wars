@@ -27,7 +27,7 @@ interact, and how does their rank inluence these interactions?
     - what about draining their aura?
 
 "AI" - hard-code an enemy NenUser, have them execute a very simple strategy
-like load power for 2 turns then release
+like load power for 2 turns then attack
 
 
 

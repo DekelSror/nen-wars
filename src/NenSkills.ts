@@ -7,19 +7,6 @@ export type NenSkill = {
     active: boolean
 }
 
-// export type NenSkills = {
-//     ten: NenSkill,
-//     ren: NenSkill,
-//     zetsu: NenSkill,
-//     gyo: NenSkill,
-//     the_in: NenSkill,
-//     en: NenSkill,
-//     shu: NenSkill,
-//     kou: NenSkill,
-//     ken: NenSkill,
-//     ryo: NenSkill,
-// }
-
 export const makeSkills: () => ({[k: string]: NenSkill}) = () => ({
     ten: {name: 'ten', rank: 1, costPerRound: 1, active: false},
     ren: {name: 'ren', rank: 0, costPerRound: 1, active: false},

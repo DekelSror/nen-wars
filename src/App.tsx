@@ -1,56 +1,10 @@
 import React, { useState } from 'react';
 import './App.css';
-import { AuraType } from './AuraType';
-import nenDetails, { AuraTypeName } from './NenDetails';
-import { NenSkill } from './NenSkills';
+import { AuraTypeSkilling } from './AuraTypeSkilling';
+import nenDetails from './NenDetails';
+import { Skilling } from './NenSkilling';
 import NenUser, { copy } from './NenUser';
 
-
-const Skilling = (props: {user: NenUser, setUser: (u: NenUser) => void}) => {
-    const {user, setUser} = props
-
-    const onSkillInto = (skill: NenSkill) => {
-        setUser(user.skillInto(skill.name, 10))
-    }
-    
-    return <div style={{padding: 10}}>
-        <h4> Nen Skills </h4>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-            {user.skillables.map((s, i) => {
-                
-                return <div key={i} style={{display: 'flex', flexDirection: 'column', gap: 5}}>
-                    <div> {s.name} </div>
-                    <div style={{paddingLeft: 5}}> {s.rank} </div>
-                    <div style={{paddingLeft: 5, paddingRight: 10}}> {s.costPerRound} </div>
-                    <button onClick={() => onSkillInto(s)} > upgrade (10) </button>
-                </div>
-            })}
-
-        </div>
-    </div>
-}
-
-const AuraTypeSkilling = (props: {user: NenUser, setUser: (u: NenUser) => void}) => {
-    const {user, setUser} = props
-
-    const eff = nenDetails.auraTypeEffectiveness(user.auraTypeAffinity)
-
-    return <div style={{display: 'flex', flexDirection: 'column', gap: 10, padding: 10}}>
-        <h4>Aura Type Proficiency</h4>
-        {Object.values(user.auraTypes).map(auraType => {
-
-            return <div 
-                key={auraType.name} 
-                style={{display: 'flex', gap: 15, border: '1px solid grey'}}
-                onClick={() => setUser(user.upgradeAuraType(auraType.name, 10))}
-            >
-                <div> {auraType.name} | {auraType.rank} </div>
-                <div > upgrade by {eff[auraType.name]} for 10 </div>
-            </div>
-        })}
-
-    </div>
-}
 
 const AuraTypesDisplay = () => {
     return <div className='hexagon' style={{border: '1px solid pink', position: 'relative', height: 140, width: 140}}>
@@ -123,8 +77,6 @@ const App = () => {
             </div>
 
             <div> remaining aura: {user.aura} </div>
-            
-            
             
             <button onClick={() => {
                 if (user.totalAuraCost > user.aura) {
