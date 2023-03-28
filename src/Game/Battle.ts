@@ -1,19 +1,22 @@
 import NenUser from "../NenUser";
-
+import { BattleAction, GameEngine, NenEngine } from "./Engine";
+import { NenBattler } from "./NenBattler";
 
 
 class Battle {
     turnCount: number
-    player1: NenUser
-    user2: NenUser
+    battler1: NenBattler
+    battler2: NenBattler
+    engine: GameEngine
 
-    constructor(player1: NenUser, user2: NenUser) {
+    constructor(user1: NenUser, user2: NenUser) {
         this.turnCount = 0
-        this.player1 = player1
-        this.user2 = user2
+        this.engine = new NenEngine
+        this.battler1 = this.engine.generatePlayer(user1)
+        this.battler2 = this.engine.generatePlayer(user2)
     }
 
-
+    
     turn() {
         // listeners
         // 
@@ -25,7 +28,9 @@ class Battle {
         }, 5000)
 
         // request decisionst
-        const player1Decision = []
+        const player1Decision: BattleAction = {
+            
+        } 
         const user2Decision = []
 
         engine.calcDecisions(player1Decision, user2Decision)

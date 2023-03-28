@@ -3,10 +3,10 @@ import NenUser from "./NenUser"
 import { AiPlayer } from "./Player"
 
 
-type BattleAction = {
-    actionType: 'activate skill' | 'deactivate skill' | 'attack' | 'block'
-    skillName?: NenSkillName
-}
+// type BattleAction = {
+//     actionType: 'activate skill' | 'deactivate skill' | 'attack' | 'block'
+//     skillName?: NenSkillName
+// }
 
 export interface BattleStrategy {
     decide: (user: NenUser, foe: NenUser, game: any) => BattleAction
