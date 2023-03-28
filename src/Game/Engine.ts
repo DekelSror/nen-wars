@@ -20,7 +20,7 @@ class NenEngine implements GameEngine{
         const defense = this.clacZetsu(skills["zetsu"].rank)
         const hit = this.clacZetsu(skills["ten"].rank)
 
-        return new NenBattler(hit, defense)
+        return new NenBattler(hit, defense, user)
     }
     clacZetsu(zetsu: number){
         return zetsu * 10

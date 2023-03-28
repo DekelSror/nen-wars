@@ -11,9 +11,14 @@ class Battle {
 
     constructor(user1: NenUser, user2: NenUser) {
         this.turnCount = 0
-        this.engine = new NenEngine
+        this.engine = new NenEngine()
         this.battler1 = this.engine.generatePlayer(user1)
         this.battler2 = this.engine.generatePlayer(user2)
+    }
+
+
+    start() {
+
     }
 
     
@@ -28,12 +33,13 @@ class Battle {
         }, 5000)
 
         // request decisionst
-        const player1Decision: BattleAction = {
+        // const player1Decision: BattleAction = {
             
-        } 
-        const user2Decision = []
+        // }
 
-        engine.calcDecisions(player1Decision, user2Decision)
+        // const user2Decision = []
+
+        // engine.calcDecisions(player1Decision, user2Decision)
 
         // execute turn
     }

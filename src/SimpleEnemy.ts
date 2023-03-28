@@ -1,3 +1,4 @@
+import { BattleAction } from "./Game/Engine"
 import { NenSkillName } from "./NenDetails"
 import NenUser from "./NenUser"
 import { AiPlayer } from "./Player"
@@ -39,15 +40,8 @@ export interface Enemy {
     strategy: BattleStrategy
 }
 
-class SimpleEnemy extends AiPlayer {
-    nenUser: NenUser
-    
-    constructor() {
-        super(new SimpleStrategy())
-        
-        this.nenUser = this.collection[0]
-    }
-}
+
+const simpleEnemy = () => new AiPlayer(new NenUser('Leol', 'conjuration'), new SimpleStrategy())
 
 
-export default SimpleEnemy
+export default simpleEnemy

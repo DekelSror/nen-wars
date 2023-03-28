@@ -4,8 +4,9 @@ export type NenSkill = {
     name: NenSkillName
     rank: number
     costPerRound: number
-    active: boolean
 }
+
+
 
 export const makeSkills: () => ({[k: string]: NenSkill}) = () => ({
     ten: {name: 'ten', rank: 1, costPerRound: 1, active: false},

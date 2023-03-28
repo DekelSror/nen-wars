@@ -1,110 +1,29 @@
 import React, { useState } from 'react';
 import './App.css';
-import { AuraTypeSkilling } from './AuraTypeSkilling';
-import nenDetails from './NenDetails';
-import { Skilling } from './NenSkilling';
+import PlayerHome from './components/PlayerHome';
+import SinglePlayerBattle from './components/SinglePlayerBattle';
+import Battle from './Game/Battle';
+import { NenEngine } from './Game/Engine';
 import NenUser, { copy } from './NenUser';
+import { AiPlayer, HumanPlayer } from './Player';
 import SimpleEnemy from './SimpleEnemy';
 
 
-const AuraTypesDisplay = () => {
-    return <div className='hexagon' style={{border: '1px solid pink', position: 'relative', height: 140, width: 140}}>
-        <div style={{border: '10px solid red', borderRadius: 10, width: 1, height: 1, position: 'absolute', top: 5, left: 65}} />
-        <div style={{border: '10px solid green', borderRadius: 10, width: 1, height: 1, position: 'absolute', top: 35, left: 125}} />
-        <div style={{border: '10px solid blue', borderRadius: 10, width: 1, height: 1, position: 'absolute', top: 95, left: 125}} />
-        <div style={{border: '10px solid black', borderRadius: 10, width: 1, height: 1, position: 'absolute', top: 115, left: 65}} />
-        <div style={{border: '10px solid blue', borderRadius: 10, width: 1, height: 1, position: 'absolute', top: 95, left: 5}} />
-        <div style={{border: '10px solid green', borderRadius: 10, width: 1, height: 1, position: 'absolute', top: 35, left: 5}} />
-    </div>
-}
+const engine = new NenEngine()
 
-// const user = new NenUser('Steve', 'enhancement')
-// const enemy = new SimpleEnemy()
+const player1 = new HumanPlayer([new NenUser('Steve', 'enhancement')], 500)
+const player2 = SimpleEnemy()
 
 
 const App = () => {
-    // const [battle, setBattle] = useState(engine.battle(user, enemy.nenUser, ... ))
-    
-
-    const [user, _setUser] = useState(new NenUser('Steve', 'enhancement'))
-    const [enemy, _setEnemy] = useState(new SimpleEnemy())
 
     const [battling, setBattling] = useState(false)
-    const [turn, setTurn] = useState(0)
 
-    // this is not the way to manage state :)
-    const setUser = (u: NenUser) => {
-        _setUser(copy(u))
-    }
-
-    
     return <div style={{width: '70%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, gap: 10}}>
-        {!battling && <div >
-            {/* {AuraTypesDisplay()} */}
-            <div style={{display: 'flex'}}>
-                <span style={{marginRight: 15}}>NenUser: {user.name}</span>
-                <span>balance: {user.balance}</span>
-            </div>
-
-            <Skilling user={user} setUser={setUser} />
-            <AuraTypeSkilling user={user} setUser={setUser} />
-            <button onClick={() => setBattling(true)}>Fight!</button>
-        </div>}
+        {!battling && <PlayerHome player={player1} />}
+        {battling && <SinglePlayerBattle human={player1} machine={player2} />}        
 
 
-        {/* BATTLE PART */}
-        {battling && <div style={{display: 'flex', flexDirection: 'column', gap: 10}}>
-
-            <div style={{display: 'flex'}}>
-                {Object.values(user.auraTypes).map(auraType => {
-                    // ideally, draw a hexagon instead
-                    return <div key={auraType.name} style={{paddingLeft: 5}}>
-                        {auraType.name} | {auraType.rank}
-                    </div>
-                })}
-            </div>
-            
-            <div style={{borderBottom: '2px solid grey'}}>
-                <span>ACTIVE SKILLS</span>
-                {user.activeSkills.map(skill => {
-                    return <div key={skill.name}>{skill.name}</div>
-                })}
-
-            </div>
-            
-            <div style={{borderBottom: '2px solid grey'}}>
-                <span>OTHER SKILLS</span>
-                {user.skillables.filter(s => !user.activeSkills.find(a => a.name === s.name)).map(s => {
-
-                    return <div key={s.name} style={{padding: 5, border: '1px solid black'}} onClick={() => {
-                        setUser(user.activateSkill(s.name))
-                    }}>
-                        <span  >
-                            activate {s.name} | {s.rank} | {s.costPerRound}
-                        </span>
-                        <span> {nenDetails.skillDescription(s.name)} </span>
-
-                    </div>
-                })}
-            </div>
-
-            <div> remaining aura: {user.aura} </div>
-            
-            <button onClick={() => {
-                if (user.totalAuraCost > user.aura) {
-                    // the user is KO'd
-                    // user.knockOut()
-                    // grant the winner prize and penalty to loser???
-                    // return to home
-                }
-                setUser(user.deductAura())
-            }} >
-                End Turn
-            </button>
-
-            <button onClick={() => setBattling(false)}>SURRENDER</button>
-
-        </div>}
     </div>
 }
 

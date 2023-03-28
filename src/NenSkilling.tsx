@@ -1,12 +1,13 @@
+import { NenSkillName } from "./NenDetails"
 import { NenSkill } from "./NenSkills"
 import NenUser from "./NenUser"
 
 
-export const Skilling = (props: {user: NenUser, setUser: (u: NenUser) => void}) => {
-    const {user, setUser} = props
+export const Skilling = (props: {user: NenUser, upgradeSkill: (skillName: NenSkillName) => void}) => {
+    const {user, upgradeSkill} = props
 
     const onSkillInto = (skill: NenSkill) => {
-        setUser(user.skillInto(skill.name, 10))
+        upgradeSkill(skill.name)
     }
     
     return <div style={{padding: 10}}>
