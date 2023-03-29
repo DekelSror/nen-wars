@@ -1,47 +1,54 @@
 import NenUser from "../NenUser";
 import { BattleAction, GameEngine, NenEngine } from "./Engine";
 import { NenBattler } from "./NenBattler";
+import Turn from "./Turn";
 
 
 class Battle {
-    turnCount: number
     battler1: NenBattler
     battler2: NenBattler
     engine: GameEngine
+    isOver = false
+    history: Turn[] = []
+    currentTurn?: Turn = undefined
+    pollingInterval?: NodeJS.Timer
 
     constructor(user1: NenUser, user2: NenUser) {
-        this.turnCount = 0
         this.engine = new NenEngine()
         this.battler1 = this.engine.generatePlayer(user1)
         this.battler2 = this.engine.generatePlayer(user2)
     }
 
-
-    start() {
-
+    get turnCount() {
+        return this.history.length
     }
 
-    
-    turn() {
-        // listeners
-        // 
-        const turnTime = setTimeout(() => {
-            // force end turn
-            // hide human controls
-            this.turnCount++
-            // check for battle end
-        }, 5000)
+    calculateEffects(actions: (BattleAction | undefined)[]) {
+        const a_battler_died = false
 
-        // request decisionst
-        // const player1Decision: BattleAction = {
-            
-        // }
+        if (a_battler_died) {
+            this.isOver = true
+        }
+    }
 
-        // const user2Decision = []
+    async turn() {
+        this.currentTurn = new Turn(5)
 
-        // engine.calcDecisions(player1Decision, user2Decision)
+        await this.currentTurn!.end()
 
-        // execute turn
+        if (this.currentTurn) {
+            this.history.push(this.currentTurn)
+            this.calculateEffects(this.currentTurn.actions)
+
+            this.currentTurn = undefined
+        }
+    }
+
+    submitTurnAction(action: BattleAction, player: number) {
+        if (this.currentTurn) {
+            console.log('submitting', action, 'for', player)
+            this.currentTurn.submitAction(action, player)
+        } else console.log('no currentTurn!')
     }
 }
 

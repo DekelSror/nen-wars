@@ -4,22 +4,26 @@ import { HumanPlayer } from "../Player"
 import NenUserView from "./NenUserView"
 
 const CollectionView = (props: {player: HumanPlayer}) => {
-    const [chosen, setChosen] = useState<NenUser>()
     const {player} = props
-
+    
+    const [chosen, setChosen] = useState<NenUser>()
 
     return <div>
-        {!chosen && player.collection.map(nenUser => {
+        <div style={{padding: 15}}>
+            {!chosen && player.collection.map(nenUser => {
 
-            return <div 
-                key={nenUser.name}
-                onClick={() => setChosen(nenUser)}
-            >
-                <span>{nenUser.name}</span>
-                <span>{nenUser.auraTypeAffinity}</span>
-                <span>{nenUser.maxAura}</span>
-            </div>
-        })}
+                return <div 
+                    key={nenUser.name}
+                    onClick={() => setChosen(nenUser)}
+                    style={{display: 'flex', gap: 15}}
+                >
+                    <span>{nenUser.name}</span>
+                    <span>{nenUser.auraTypeAffinity}</span>
+                    <span>{nenUser.maxAura}</span>
+                </div>
+            })}
+
+        </div>
 
         {chosen && <div>
             <NenUserView 
@@ -27,7 +31,7 @@ const CollectionView = (props: {player: HumanPlayer}) => {
                 onSKillInto={skillName => player.skillInto(chosen, skillName, 10)}
                 onUpgradeAuraType={auraTypeName => player.upgradeAuraType(chosen, auraTypeName, 10)}
             />
-            <button>BACK TO COLLECTION</button>
+            <button onClick={() => setChosen(undefined)}>BACK TO COLLECTION</button>
         </div>}
 
     </div>

@@ -30,5 +30,10 @@ interact, and how does their rank inluence these interactions?
 like load power for 2 turns then attack
 
 
+### development questions
+- state management (store)
+- styling- inline, css files, libraries..
+
+
 
 which class should we fly to Japan?

@@ -10,20 +10,20 @@ import { AiPlayer } from "./Player"
 // }
 
 export interface BattleStrategy {
-    decide: (user: NenUser, foe: NenUser, game: any) => BattleAction
+    decide: (turnCount: number) => BattleAction
 }
 
 
 
 class SimpleStrategy implements BattleStrategy {
-    decide(user: NenUser, foe: NenUser, game: any) {
+    decide(turnCount: number) {
         let res: BattleAction = {actionType: 'activate skill'} 
 
-        if (game.turn < 3) {
+        if (turnCount < 3) {
             res = {actionType: 'activate skill', skillName: 'ren'}
         }
         else {
-            if (game.turn % 2 === 0) {
+            if (turnCount % 2 === 0) {
                 res = {actionType: 'attack'}
             } else {
                 res = {actionType: 'block'}

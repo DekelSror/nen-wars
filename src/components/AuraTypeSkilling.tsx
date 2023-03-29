@@ -1,5 +1,5 @@
-import nenDetails, { AuraTypeName } from "./NenDetails"
-import NenUser from "./NenUser"
+import nenDetails, { AuraTypeName } from "../NenDetails"
+import NenUser from "../NenUser"
 
 export const AuraTypeSkilling = (props: {user: NenUser, upgradeAuraType: (auratYpeName: AuraTypeName) => void}) => {
     const {user, upgradeAuraType} = props

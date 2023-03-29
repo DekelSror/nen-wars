@@ -8,8 +8,7 @@ const PlayerHome = (props: {player: HumanPlayer}) => {
 
         <CollectionView player={player} />
 
-        <button>SINGLE PLAYER BATTLE</button>
-        <button>MULTIPLAYER BATTLE</button>
+
     </div>
 }
 

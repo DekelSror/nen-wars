@@ -22,9 +22,11 @@ class NenEngine implements GameEngine{
 
         return new NenBattler(hit, defense, user)
     }
+
     clacZetsu(zetsu: number){
         return zetsu * 10
     }
+    
     calcTen(ten: number){
         return ten * 10
     }

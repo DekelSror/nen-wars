@@ -1,6 +1,6 @@
-import { NenSkillName } from "./NenDetails"
-import { NenSkill } from "./NenSkills"
-import NenUser from "./NenUser"
+import { NenSkillName } from "../NenDetails"
+import { NenSkill } from "../NenSkills"
+import NenUser from "../NenUser"
 
 
 export const Skilling = (props: {user: NenUser, upgradeSkill: (skillName: NenSkillName) => void}) => {
