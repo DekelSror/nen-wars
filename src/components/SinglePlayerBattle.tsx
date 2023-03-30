@@ -12,6 +12,8 @@ const SinglePlayerBattle = ({human, machine}: SinglePlayerBattleProps) => {
     const [refresh, setRefresh] = useState(true)
     const f5 = () => setRefresh(!refresh)
     const battle = useRef(new Battle(human.collection[0], machine.nenUser))
+    const [attackPower, setAttackPower] = useState(0)
+    const [blockPower, setBlockPower] = useState(0)
     // const [humanAction, setHumanAction] = useState<BattleAction>()
 
 
@@ -38,6 +40,11 @@ const SinglePlayerBattle = ({human, machine}: SinglePlayerBattleProps) => {
                 battle.current.submitTurnAction({actionType: 'attack', actionPower: 1}, 0)
                 f5()
             }} > GO! </button>
+
+            <input type={'number'} min= {0} max={battle.current.battler1.aura} step={1} onChange={() => setAttackPower(attackPower + 1)}/>
+            <input type={'number'} min= {0} max={battle.current.battler1.aura} step={1} onChange={() => setBlockPower(blockPower + 1)}/>
+            <div>your hp: {battle.current.battler1.hp}</div>
+            <div>enemy hp: {battle.current.battler2.hp}</div>
         </div>
 
 
