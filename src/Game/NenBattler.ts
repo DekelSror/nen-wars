@@ -13,10 +13,14 @@ export class NenBattler {
     user: NenUser
     aura: number
     battleSkills: {[k: string]: BattleSkill}
+    hp: number
+    blockCount: number
 
     constructor(hit: number, defense: number, user: NenUser){
         this.user = user
         this.aura = user.maxAura
+        this.hp = 10
+        this.blockCount = 0
 
         this.moves = {
             hit     : hit,

@@ -35,7 +35,7 @@ const SinglePlayerBattle = ({human, machine}: SinglePlayerBattleProps) => {
 
             <button disabled={Boolean(battle.current.currentTurn && battle.current.currentTurn.actions[0])} onClick={() => {
                 console.log('submitting human action')
-                battle.current.submitTurnAction({actionType: 'attack'}, 0)
+                battle.current.submitTurnAction({actionType: 'attack', actionPower: 1}, 0)
                 f5()
             }} > GO! </button>
         </div>

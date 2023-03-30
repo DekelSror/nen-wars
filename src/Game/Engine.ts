@@ -11,6 +11,7 @@ export interface GameEngine {
 export type BattleAction = {
     actionType: 'activate skill' | 'deactivate skill' | 'attack' | 'block'
     skillName?: NenSkillName
+    actionPower: number
 }
 
 class NenEngine implements GameEngine{
