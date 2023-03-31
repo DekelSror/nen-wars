@@ -23,23 +23,26 @@ class Battle {
         return this.history.length
     }
 
-    calculateEffects(actions: (BattleAction | undefined)[]) {
-        if(actions[0] && actions[1]){
-            this.battler1.useMove(actions[0]?.actionType, actions[0]?.actionPower)
-            this.battler2.useMove(actions[1]?.actionType, actions[1]?.actionPower)           
-        }
+    calculateEffects(rawActions: (BattleAction | undefined)[]) {
+        const actions = rawActions.map(a => {
+            if (a) return a
+            return {actionType: 'block', actionPower: 1}
+        })
 
-        if (actions[0]?.actionType == 'attack' && actions[1]?.actionType == 'attack'){
+        this.battler1.useMove(actions[0].actionType, actions[0].actionPower)
+        this.battler2.useMove(actions[1].actionType, actions[1].actionPower)           
+
+        if (actions[0].actionType == 'attack' && actions[1].actionType == 'attack'){
             if (actions[0].actionPower > actions[1].actionPower)
                 this.battler2.hp -= (actions[0].actionPower - actions[1].actionPower)
             else if (actions[0].actionPower < actions[1].actionPower)
                 this.battler1.hp -= (actions[1].actionPower - actions[0].actionPower)        
         }
 
-        else if (actions[0]?.actionType == 'block' && actions[1]?.actionType == 'attack'){
+        else if (actions[0].actionType == 'block' && actions[1].actionType == 'attack'){
             this.blockerAttacker(this.battler1, this.battler2, actions[0].actionPower, actions[1].actionPower) 
         }
-        else if (actions[1]?.actionType == 'block' && actions[0]?.actionType == 'attack'){
+        else if (actions[1].actionType == 'block' && actions[0].actionType == 'attack'){
             this.blockerAttacker(this.battler2, this.battler1, actions[1].actionPower, actions[0].actionPower)    
         }
         else{
@@ -53,21 +56,24 @@ class Battle {
     }
 
     async turn() {
-        this.currentTurn = new Turn(5)
+        this.currentTurn = new Turn(3)
 
-        await this.currentTurn!.end()
-
+        
         if (this.currentTurn) {
-            this.history.push(this.currentTurn)
+            await this.currentTurn.end()
             this.calculateEffects(this.currentTurn.actions)
+            this.history.push(this.currentTurn)
 
             this.currentTurn = undefined
+
+            if (this.battler1.hp <= 0 || this.battler2.hp <= 0) {
+                this.isOver = true
+            }
         }
     }
 
     submitTurnAction(action: BattleAction, player: number) {
         if (this.currentTurn) {
-            console.log('submitting', action, 'for', player)
             this.currentTurn.submitAction(action, player)
         } else console.log('no currentTurn!')
     }
