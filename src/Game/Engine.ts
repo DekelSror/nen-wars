@@ -9,8 +9,8 @@ export interface GameEngine {
 }
 
 export type BattleAction = {
-    actionType: 'activate skill' | 'deactivate skill' | 'attack' | 'block'
-    skillName?: NenSkillName
+    actionType: 'attack' | 'block' | 'retreat' | 'approach'
+    // skillName?: NenSkillName
     actionPower: number
 }
 

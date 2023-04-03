@@ -17,21 +17,12 @@ export interface BattleStrategy {
 
 class SimpleStrategy implements BattleStrategy {
     decide(turnCount: number) {
-        let res: BattleAction = {actionType: 'activate skill', actionPower: 1} 
-
-        if (turnCount < 3) {
-            res = {actionType: 'activate skill', skillName: 'ren', actionPower: 1}
+        if (turnCount % 2 === 0) {
+            return {actionType: 'attack', actionPower: 1} as BattleAction
+        } else {
+            return {actionType: 'block', actionPower: 1} as BattleAction
         }
-        else {
-            if (turnCount % 2 === 0) {
-                res = {actionType: 'attack', actionPower: 1}
-            } else {
-                res = {actionType: 'block', actionPower: 1}
-            }
         }
-
-        return res
-    }
 }
 
 

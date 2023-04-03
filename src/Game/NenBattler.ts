@@ -39,12 +39,12 @@ export class NenBattler {
         return Object.values(this.battleSkills).filter(s => s.active)
     }
     
-    useMove(move: string, usage: number) {
-        if (this.moves[move] >= usage) {
-            this.moves[move] = this.moves[move] - usage
+    useMove(move: string, power: number) {
+        if (this.moves[move] >= power) {
+            this.moves[move] = this.moves[move] - power
         }
         else {
-            console.log(`not enough ${move}. need ${usage} got ${this.moves[move]}`)
+            console.log(`not enough ${move}. need ${power} got ${this.moves[move]}`)
         }
     }
 
