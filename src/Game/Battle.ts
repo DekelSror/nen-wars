@@ -11,12 +11,14 @@ class Battle {
     isOver = false
     history: Turn[] = []
     currentTurn?: Turn = undefined
-    pollingInterval?: NodeJS.Timer
+    distanceBetweenBattlers: number
 
     constructor(user1: NenUser, user2: NenUser) {
         this.engine = new NenEngine()
         this.battler1 = this.engine.generatePlayer(user1)
         this.battler2 = this.engine.generatePlayer(user2)
+
+        this.distanceBetweenBattlers = 10
     }
 
     get turnCount() {
@@ -24,10 +26,7 @@ class Battle {
     }
 
     calculateEffects(rawActions: (BattleAction | undefined)[]) {
-        const actions = rawActions.map(a => {
-            if (a) return a
-            return {actionType: 'block', actionPower: 1}
-        })
+        const actions: BattleAction[] = rawActions.map(a => (a ?? {actionType: 'block', actionPower: 1}))
 
         this.battler1.useMove(actions[0].actionType, actions[0].actionPower)
         this.battler2.useMove(actions[1].actionType, actions[1].actionPower)           

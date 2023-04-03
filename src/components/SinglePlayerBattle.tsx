@@ -21,8 +21,6 @@ const SinglePlayerBattle = ({human, machine}: SinglePlayerBattleProps) => {
         if (battle.current.isOver) return
         battle.current.turn().then(f5)
         battle.current.submitTurnAction(machine.strategy.decide(battle.current.turnCount), 1)
-        // setTimeout(() => {
-        // }, 4000)
     }, [battle.current.turnCount])
     
     return <div>
@@ -31,6 +29,8 @@ const SinglePlayerBattle = ({human, machine}: SinglePlayerBattleProps) => {
             {battle.current.battler1.hp <= 0 && battle.current.battler2.user.name + ' is the winner'}     
             {battle.current.battler2.hp <= 0 && battle.current.battler1.user.name + ' is the winner'}     
         </div>}
+
+        <div> distance: {battle.current.distanceBetweenBattlers} </div>
         <div>
             {battle.current.battler1.user.name}
 
