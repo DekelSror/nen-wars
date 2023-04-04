@@ -28,8 +28,8 @@ class Battle {
     calculateEffects(rawActions: (BattleAction | undefined)[]) {
         const actions: BattleAction[] = rawActions.map(a => (a ?? {actionType: 'block', actionPower: 1}))
 
-        this.battler1.useMove(actions[0].actionType, actions[0].actionPower)
-        this.battler2.useMove(actions[1].actionType, actions[1].actionPower)           
+        this.battler1.usePhysicalSkill(actions[0].actionType, actions[0].actionPower)
+        this.battler2.usePhysicalSkill(actions[1].actionType, actions[1].actionPower)           
 
         if (actions[0].actionType == 'attack' && actions[1].actionType == 'attack'){
             if (actions[0].actionPower > actions[1].actionPower)

@@ -1,12 +1,14 @@
 import { AuraType, makeAuraTypes } from "./AuraType"
 import nenDetails, { AuraTypeName, NenSkillName } from "./NenDetails"
 import { NenSkill, makeSkills } from "./NenSkills"
+import { PhysicalSkill } from "./PhysicalSkills"
 
 class NenUser {
     name: string
     auraTypeAffinity: AuraTypeName
     skills: {[k: string]: NenSkill}
     auraTypes: {[k: string]: AuraType}
+    physicalSkills: {[k: string]: PhysicalSkill}
     
     maxAura = 5
 
@@ -15,6 +17,11 @@ class NenUser {
         this.auraTypeAffinity = auraTypeAffinity
         this.skills = makeSkills()
         this.auraTypes = makeAuraTypes()
+        this.physicalSkills = {
+            erobic: {name: "erobic", rank: 5, costPerRound: 2},
+            anerobic: {name: "anerobic", rank: 2, costPerRound: 4}
+        }
+            
     }
 
     get skillables() {
