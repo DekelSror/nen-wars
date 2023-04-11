@@ -1,6 +1,6 @@
 import { NenSkillName } from "../NenDetails";
 import NenUser from "../NenUser";
-import { NenBattler } from "./NenBattler";
+import { BattlePhysicalSkillName, NenBattler } from "./NenBattler";
 
 
 
@@ -8,10 +8,14 @@ export interface GameEngine {
     generatePlayer: (user: NenUser) => NenBattler
 }
 
-export type BattleAction = {
-    actionType: 'attack' | 'block' | 'retreat' | 'approach'
-    // skillName?: NenSkillName
-    actionPower: number
+export type PhysicalBattleAction = {
+    physicalSkillName: BattlePhysicalSkillName
+    power: number
+}
+
+export type NenBattleAction = {
+    nenSkillName: NenSkillName
+    power: number
 }
 
 class NenEngine implements GameEngine{

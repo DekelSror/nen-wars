@@ -1,5 +1,5 @@
 import NenUser from "../NenUser";
-import { BattleAction, GameEngine, NenEngine } from "./Engine";
+import { GameEngine, NenEngine, PhysicalBattleAction } from "./Engine";
 import { NenBattler } from "./NenBattler";
 import Turn from "./Turn";
 
@@ -25,26 +25,26 @@ class Battle {
         return this.history.length
     }
 
-    calculateEffects(rawActions: (BattleAction | undefined)[]) {
-        const actions: BattleAction[] = rawActions.map(a => (a ?? {actionType: 'block', actionPower: 1}))
+    calculateEffects(rawActions: (PhysicalBattleAction | undefined)[]) {
+        const actions: PhysicalBattleAction[] = rawActions.map(a => (a ?? {physicalSkillName: 'block', power: 1}))
 
-        this.battler1.usePhysicalSkill(actions[0].actionType, actions[0].actionPower)
-        this.battler2.usePhysicalSkill(actions[1].actionType, actions[1].actionPower)           
+        this.battler1.usePhysicalSkill(actions[0].physicalSkillName, actions[0].power)
+        this.battler2.usePhysicalSkill(actions[1].physicalSkillName, actions[1].power)           
 
-        if (actions[0].actionType == 'attack' && actions[1].actionType == 'attack'){
-            if (actions[0].actionPower > actions[1].actionPower)
-                this.battler2.hp -= (actions[0].actionPower - actions[1].actionPower)
-            else if (actions[0].actionPower < actions[1].actionPower)
-                this.battler1.hp -= (actions[1].actionPower - actions[0].actionPower)        
+        if (actions[0].physicalSkillName == 'hit' && actions[1].physicalSkillName == 'hit') {
+            if (actions[0].power > actions[1].power)
+                this.battler2.hp -= (actions[0].power - actions[1].power)
+            else if (actions[0].power < actions[1].power)
+                this.battler1.hp -= (actions[1].power - actions[0].power)        
         }
 
-        else if (actions[0].actionType == 'block' && actions[1].actionType == 'attack'){
-            this.blockerAttacker(this.battler1, this.battler2, actions[0].actionPower, actions[1].actionPower) 
+        else if (actions[0].physicalSkillName == 'block' && actions[1].physicalSkillName == 'hit') {
+            this.blockerAttacker(this.battler1, this.battler2, actions[0].power, actions[1].power) 
         }
-        else if (actions[1].actionType == 'block' && actions[0].actionType == 'attack'){
-            this.blockerAttacker(this.battler2, this.battler1, actions[1].actionPower, actions[0].actionPower)    
+        else if (actions[1].physicalSkillName == 'block' && actions[0].physicalSkillName == 'hit') {
+            this.blockerAttacker(this.battler2, this.battler1, actions[1].power, actions[0].power)    
         }
-        else{
+        else {
             this.battler1.blockCount += 1
             this.battler2.blockCount += 1
         }
@@ -71,7 +71,7 @@ class Battle {
         }
     }
 
-    submitTurnAction(action: BattleAction, player: number) {
+    submitTurnAction(action: PhysicalBattleAction, player: number) {
         if (this.currentTurn) {
             this.currentTurn.submitAction(action, player)
         } else console.log('no currentTurn!')
