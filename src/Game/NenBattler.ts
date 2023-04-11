@@ -5,7 +5,7 @@ import { PhysicalBattleAction } from "./Engine"
 
 
 
-export type BattleSkill = NenSkill & {
+export type NenBattleSkill = NenSkill & {
     active: boolean
 }
 
@@ -13,13 +13,25 @@ export type BattlePhysicalSkillName = "hit" | "block" | "advance" | "retreat"
 
 export class NenBattler {
     user: NenUser
-    aura: number
-    battleSkills: {[k: string]: BattleSkill}
-    hp: number
-    blockCount: number//redundntetttt?
+    
+    // skills
+    battleSkills: {[k: string]: NenBattleSkill}
     battlePhysicalSkill: {[k: string]: number}
+    
     moves: any
+    
+    // resources
+    hp: number
+    aura: number
+    physicalResources = {
+        stamina: 10,
+        aerobic: 10,
+        unaerobic: 10
+    }
 
+    // related to battle history
+    blockCount: number//redundntetttt?
+    
     constructor(hit: number, defense: number, user: NenUser){
         this.user = user
         this.aura = user.maxAura
@@ -96,64 +108,64 @@ export class NenBattler {
 
     checkIfHit(power: number){
         var flag = true
-        if (this.battlePhysicalSkill['stamina'] - (power / 4) <= 0)
+        if (this.physicalResources.stamina - (power / 4) <= 0)
             flag = false
-        if (this.battlePhysicalSkill['erobic'] - (power / 3) <= 0)
+        if (this.physicalResources.aerobic - (power / 3) <= 0)
             flag = false
-        if (this.battlePhysicalSkill['anerobic'] - (power / 2) <= 0)
+        if (this.physicalResources.unaerobic - (power / 2) <= 0)
             flag = false
         if (flag){
-            this.battlePhysicalSkill['stamina'] = this.battlePhysicalSkill['stamina'] - (power / 4)
-            this.battlePhysicalSkill['erobic'] = this.battlePhysicalSkill['erobic'] - (power / 3)
-             this.battlePhysicalSkill['anerobic'] = this.battlePhysicalSkill['anerobic'] - (power / 2)
+            this.physicalResources.stamina = this.physicalResources.stamina - (power / 4)
+            this.physicalResources.aerobic = this.physicalResources.aerobic - (power / 3)
+            this.physicalResources.unaerobic = this.physicalResources.unaerobic - (power / 2)
         }
         return flag
     }
 
     checkIfBlock(power: number){
         var flag = true
-        if (this.battlePhysicalSkill['stamina'] - (power / 4) <= 0)
+        if (this.physicalResources.stamina - (power / 4) <= 0)
             flag = false
-        if (this.battlePhysicalSkill['erobic'] - (power / 3) <= 0)
+        if (this.physicalResources.aerobic - (power / 3) <= 0)
             flag = false
-        if (this.battlePhysicalSkill['anerobic'] - (power / 2) <= 0)
+        if (this.physicalResources.unaerobic - (power / 2) <= 0)
             flag = false
         if (flag){
-            this.battlePhysicalSkill['stamina'] = this.battlePhysicalSkill['stamina'] - (power / 4)
-            this.battlePhysicalSkill['erobic'] = this.battlePhysicalSkill['erobic'] - (power / 3)
-             this.battlePhysicalSkill['anerobic'] = this.battlePhysicalSkill['anerobic'] - (power / 2)
+            this.physicalResources.stamina = this.physicalResources.stamina - (power / 4)
+            this.physicalResources.aerobic = this.physicalResources.aerobic - (power / 3)
+             this.physicalResources.unaerobic = this.physicalResources.unaerobic - (power / 2)
         }
         return flag
     }
 
     checkIfAdvance(power: number){
         var flag = true
-        if (this.battlePhysicalSkill['stamina'] - (power / 4) <= 0)
+        if (this.physicalResources.stamina - (power / 4) <= 0)
             flag = false
-        if (this.battlePhysicalSkill['erobic'] - (power / 3) <= 0)
+        if (this.physicalResources.aerobic - (power / 3) <= 0)
             flag = false
-        if (this.battlePhysicalSkill['anerobic'] - (power / 2) <= 0)
+        if (this.physicalResources.unaerobic - (power / 2) <= 0)
             flag = false
         if (flag){
-            this.battlePhysicalSkill['stamina'] = this.battlePhysicalSkill['stamina'] - (power / 4)
-            this.battlePhysicalSkill['erobic'] = this.battlePhysicalSkill['erobic'] - (power / 3)
-             this.battlePhysicalSkill['anerobic'] = this.battlePhysicalSkill['anerobic'] - (power / 2)
+            this.physicalResources.stamina = this.physicalResources.stamina - (power / 4)
+            this.physicalResources.aerobic = this.physicalResources.aerobic - (power / 3)
+             this.physicalResources.unaerobic = this.physicalResources.unaerobic - (power / 2)
         }
         return flag
     }
 
     checkIfRetreat(power: number){
         var flag = true
-        if (this.battlePhysicalSkill['stamina'] - (power / 4) <= 0)
+        if (this.physicalResources.stamina - (power / 4) <= 0)
             flag = false
-        if (this.battlePhysicalSkill['erobic'] - (power / 3) <= 0)
+        if (this.physicalResources.aerobic - (power / 3) <= 0)
             flag = false
-        if (this.battlePhysicalSkill['anerobic'] - (power / 2) <= 0)
+        if (this.physicalResources.unaerobic - (power / 2) <= 0)
             flag = false
         if (flag){
-            this.battlePhysicalSkill['stamina'] = this.battlePhysicalSkill['stamina'] - (power / 4)
-            this.battlePhysicalSkill['erobic'] = this.battlePhysicalSkill['erobic'] - (power / 3)
-             this.battlePhysicalSkill['anerobic'] = this.battlePhysicalSkill['anerobic'] - (power / 2)
+            this.physicalResources.stamina = this.physicalResources.stamina - (power / 4)
+            this.physicalResources.aerobic = this.physicalResources.aerobic - (power / 3)
+             this.physicalResources.unaerobic = this.physicalResources.unaerobic - (power / 2)
         }
         return flag
     }
