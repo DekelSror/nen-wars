@@ -1,39 +1,18 @@
-
-### how to POC
-
-what will it be - 
-
-battle agianst "AI" enemy.
-
-Each turn a timer starts for both players to take their actions
-
-actions are 
-- activate / deactivate skills
-- attack / block / dodge / ?
-
-when the last player chooses, the actions are executed,
-damage is calculated, aura is deducted for active skills,
-and the battle may be over
-
-
-how to achieve it - 
-
-engine - we need to know how to calculate the effects of players' actions.
-this should be broken up further... 
-* what are attacks? 
-* how does different nen skills
-interact, and how does their rank inluence these interactions?
-* can you win in any way other then "killing" (bringin enemy HP to 0?)
-    - what about draining their aura?
-
-"AI" - hard-code an enemy NenUser, have them execute a very simple strategy
-like load power for 2 turns then attack
-
-
-### development questions
-- state management (store)
-- styling- inline, css files, libraries..
-
-
-
 which class should we fly to Japan?
+
+
+modifiers - calculated at start of turn
+- how active nen skills effect phyiscal skills (future - other nen skills)
+
+
+deduct resources (aura, stamina, aerobic...)
+
+actual power - given a physical battle action (name, power)
+considering the modifiers and skill ranks (from nen user) what is the
+power of the move
+
+
+exchange - effects of opposing active skills, distance, chosen phsysical skill etc.
+
+
+

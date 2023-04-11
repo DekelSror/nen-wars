@@ -13,6 +13,9 @@ class Battle {
     currentTurn?: Turn = undefined
     distanceBetweenBattlers: number
 
+    battler1Mods = {hit: 0, block: 0, advance: 0, retreat: 0}
+    battler2Mods = {hit: 0, block: 0, advance: 0, retreat: 0}
+
     constructor(user1: NenUser, user2: NenUser) {
         this.engine = new NenEngine()
         this.battler1 = this.engine.generatePlayer(user1)
@@ -60,7 +63,11 @@ class Battle {
 
         
         if (this.currentTurn) {
+            this.battler1Mods = this.battler1.physicalSkillsModifiers()
+            this.battler2Mods = this.battler2.physicalSkillsModifiers()
+
             await this.currentTurn.end()
+
             this.calculateEffects(this.currentTurn.actions)
             this.history.push(this.currentTurn)
 
@@ -84,7 +91,7 @@ class Battle {
             blocker.hp -= attackPower
             blocker.blockCount = 0
         } 
-        else{
+        else {
             blocker.hp -= attackPower - blockPower < 0 ? 0 : attackPower - blockPower
             blocker.blockCount += 1
         }    

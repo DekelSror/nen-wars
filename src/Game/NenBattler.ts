@@ -1,12 +1,12 @@
 import { NenSkillName } from "../NenDetails"
 import { NenSkill } from "../NenSkills"
 import NenUser from "../NenUser"
-import { PhysicalBattleAction } from "./Engine"
+import { NenBattleAction, PhysicalBattleAction } from "./Engine"
 
 
 
 export type NenBattleSkill = NenSkill & {
-    active: boolean
+    power: number
 }
 
 export type BattlePhysicalSkillName = "hit" | "block" | "advance" | "retreat"
@@ -16,7 +16,7 @@ export class NenBattler {
     
     // skills
     battleSkills: {[k: string]: NenBattleSkill}
-    battlePhysicalSkill: {[k: string]: number}
+    battlePhysicalSkill: {hit: number, block: number, advance: number, retreat: number}
     
     moves: any
     
@@ -44,7 +44,7 @@ export class NenBattler {
         }
         this.battlePhysicalSkill = this.calcPhysicalSkills()
         // turn nenskills to battleskils!
-        this.battleSkills = Object.values(user.skills).reduce((dict, skill) => ({...dict, [skill.name]: {...skill, active: false}}), {})
+        this.battleSkills = Object.values(user.skills).reduce((dict, skill) => ({...dict, [skill.name]: {...skill, power: 0}}), {})
     }
 
     get totalAuraCost() {
@@ -52,17 +52,48 @@ export class NenBattler {
     }
 
     get activeSkills() {
-        return Object.values(this.battleSkills).filter(s => s.active)
+        return Object.values(this.battleSkills).filter(s => s.power > 0)
     }
 
     calcPhysicalSkills(){
         //TODO:: calculate based on physical skill of user
         return {
-            "hit": 5, //calcHit(),
-            "block": 4, //calcBlock()......
-            "advance": 3,
-            "retreate": 4
+            hit: 5, //calcHit(),
+            block: 4, //calcBlock()......
+            advance: 3,
+            retreat: 4
         }
+    }
+
+    actualHitPower(power: number, hitModifier: number) {
+        return this.battlePhysicalSkill['hit'] + hitModifier + power
+    }
+
+    modifiers: (skill: NenBattleSkill) => ({hit: number, block: number, advance: number, retreat: number}) = skill => {
+        switch (skill.name) {
+            case 'gyo':
+                const gyoSkill = this.activeSkills.find(s => s.name === 'gyo')
+                if (gyoSkill) {
+                    // have a function instead of +
+                    return {hit: skill.rank + skill.power, block: 0, advance: 0, retreat: 0}
+                } else {
+                    return {hit: 0, block: 0, advance: 0, retreat: 0}
+                }
+            default:
+                return {hit: 0, block: 0, advance: 0, retreat: 0}
+        }
+    }
+
+    physicalSkillsModifiers() {
+        return this.activeSkills.reduce((mods, skill) => {
+            const skillMods = this.modifiers(skill)
+            return {
+                hit: mods.hit + skillMods.hit,
+                block: mods.block + skillMods.block,
+                advance: mods.advance + skillMods.advance,
+                retreat: mods.retreat + skillMods.retreat,
+            }
+        }, {hit: 0, block: 0, advance: 0, retreat: 0})
     }
     
     usePhysicalSkill(action: PhysicalBattleAction) {
@@ -175,8 +206,8 @@ export class NenBattler {
         return this
     }
     
-    activateSkill(skillName: NenSkillName) {
-        this.battleSkills[skillName].active = true
+    activateSkill(action: NenBattleAction) {
+        this.battleSkills[action.nenSkillName].power = action.power
 
         return this
     }
