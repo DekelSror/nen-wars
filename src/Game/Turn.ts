@@ -1,10 +1,10 @@
-import { BattleAction } from "./Engine"
+import { PhysicalBattleAction } from "./Engine"
 
 
 
 class Turn {
     // isOver = false
-    actions: (BattleAction | undefined)[] = [undefined, undefined]
+    actions: (PhysicalBattleAction | undefined)[] = [undefined, undefined]
     duration: number
     whoWentFirst: 'p1' | 'p2' | 'n/a'
 
@@ -25,7 +25,7 @@ class Turn {
         return this
     }
 
-    submitAction(action: BattleAction, player: number) {
+    submitAction(action: PhysicalBattleAction, player: number) {
         if (this.actions[player]) return
 
         this.actions[player] = action
