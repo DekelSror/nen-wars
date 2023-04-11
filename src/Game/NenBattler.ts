@@ -1,6 +1,7 @@
 import { NenSkillName } from "../NenDetails"
 import { NenSkill } from "../NenSkills"
 import NenUser from "../NenUser"
+import { PhysicalBattleAction } from "./Engine"
 
 
 
@@ -52,42 +53,43 @@ export class NenBattler {
         }
     }
     
-    usePhysicalSkill(move: BattlePhysicalSkillName, power: number) {
+    usePhysicalSkill(action: PhysicalBattleAction) {
+        const {physicalSkillName, power} = action
 
-        if (move == "hit")
+        if (physicalSkillName == "hit")
         {
                 if (this.checkIfHit(power)) {
                 console.log(`awesome Hit!!!!`)
             }
             else {
-                console.log(`not enough ${move}. need ${power} got ${this.moves[move]}`)
+                console.log(`not enough ${physicalSkillName}. need ${power} got ${this.moves[physicalSkillName]}`)
             }
         }
-        else if (move == "block")
+        else if (physicalSkillName == "block")
         {
                 if (this.checkIfBlock(power)) {
                 console.log(`awesome Block!!!!`)
             }
             else {
-                console.log(`not enough ${move}. need ${power} got ${this.moves[move]}`)
+                console.log(`not enough ${physicalSkillName}. need ${power} got ${this.moves[physicalSkillName]}`)
             }
         }
-        else if (move == "advance")
+        else if (physicalSkillName == "advance")
         {
                 if (this.checkIfAdvance(power)) {
                 console.log(`damn youre quick!!!!`)
             }
             else {
-                console.log(`not enough ${move}. need ${power} got ${this.moves[move]}`)
+                console.log(`not enough ${physicalSkillName}. need ${power} got ${this.moves[physicalSkillName]}`)
             }
         }
-        else if (move == "retreat")
+        else if (physicalSkillName == "retreat")
         {
                 if (this.checkIfRetreat(power)) {
                 console.log(`damn youre quick!!!!`)
             }
             else {
-                console.log(`not enough ${move}. need ${power} got ${this.moves[move]}`)
+                console.log(`not enough ${physicalSkillName}. need ${power} got ${this.moves[physicalSkillName]}`)
             }
         }
     }

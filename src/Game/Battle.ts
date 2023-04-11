@@ -28,9 +28,10 @@ class Battle {
     calculateEffects(rawActions: (PhysicalBattleAction | undefined)[]) {
         const actions: PhysicalBattleAction[] = rawActions.map(a => (a ?? {physicalSkillName: 'block', power: 1}))
 
-        this.battler1.usePhysicalSkill(actions[0].physicalSkillName, actions[0].power)
-        this.battler2.usePhysicalSkill(actions[1].physicalSkillName, actions[1].power)           
+        this.battler1.usePhysicalSkill(actions[0])
+        this.battler2.usePhysicalSkill(actions[1])
 
+        // determine hit / hit | block / block | hit / block
         if (actions[0].physicalSkillName == 'hit' && actions[1].physicalSkillName == 'hit') {
             if (actions[0].power > actions[1].power)
                 this.battler2.hp -= (actions[0].power - actions[1].power)
