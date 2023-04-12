@@ -1,4 +1,4 @@
-import { BattleAction } from "./Game/Engine"
+import { PhysicalBattleAction } from "./Game/Engine"
 import { NenSkillName } from "./NenDetails"
 import NenUser from "./NenUser"
 import { AiPlayer } from "./Player"
@@ -10,7 +10,7 @@ import { AiPlayer } from "./Player"
 // }
 
 export interface BattleStrategy {
-    decide: (turnCount: number) => BattleAction
+    decide: (turnCount: number) => PhysicalBattleAction
 }
 
 
@@ -18,9 +18,9 @@ export interface BattleStrategy {
 class SimpleStrategy implements BattleStrategy {
     decide(turnCount: number) {
         if (turnCount % 2 === 0) {
-            return {actionType: 'attack', actionPower: 1} as BattleAction
+            return {physicalSkillName: 'hit', power: 1} as PhysicalBattleAction
         } else {
-            return {actionType: 'block', actionPower: 1} as BattleAction
+            return {physicalSkillName: 'block', power: 1 }as PhysicalBattleAction
         }
         }
 }

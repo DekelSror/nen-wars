@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import Battle from "../Game/Battle"
-import { BattleAction } from "../Game/Engine"
+import { PhysicalBattleAction } from "../Game/Engine"
 import { HumanPlayer, AiPlayer } from "../Player"
 
 type SinglePlayerBattleProps = {
@@ -35,7 +35,7 @@ const SinglePlayerBattle = ({human, machine}: SinglePlayerBattleProps) => {
             {battle.current.battler1.user.name}
 
             <button onClick={() => {
-                battle.current.submitTurnAction({actionType: 'attack', actionPower: attackPower}, 0)
+                battle.current.submitTurnAction({physicalSkillName: 'hit', power: attackPower}, 0)
             }} > GO! </button>
 
             <input size={20} type={'number'} min= {0} max={battle.current.battler1.aura} step={1} onChange={() => setAttackPower(attackPower + 1)}/>
