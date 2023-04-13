@@ -1,12 +1,13 @@
 import { AuraType, makeAuraTypes } from "./AuraType"
 import nenDetails, { AuraTypeName, NenSkillName } from "./NenDetails"
 import { NenSkill, makeSkills } from "./NenSkills"
+import { NenSkillBase } from "./NenSkills/NenSkillBase"
 import { PhysicalSkill } from "./PhysicalSkills"
 
 class NenUser {
     name: string
     auraTypeAffinity: AuraTypeName
-    skills: {[k: string]: NenSkill}
+    skills: {[k: string]: NenSkillBase}//skills: {[k: string]: NenSkill}
     auraTypes: {[k: string]: AuraType}
     physicalSkills: {[k: string]: PhysicalSkill}
     
@@ -34,7 +35,7 @@ class NenUser {
 
         for (const name of basesNames) {
             if (!name) continue
-            if (this.skills[name].rank < 3) {
+            if (this.skills[name].effectOnPhysicalSkill['hit'] < 3) {
                 return false
             }
         }

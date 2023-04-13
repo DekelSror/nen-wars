@@ -13,6 +13,10 @@ power of the move
 
 
 exchange - effects of opposing active skills, distance, chosen phsysical skill etc.
+ ______________________
+thoughts....
+
+- adding factory to build all nen skills
 
 
 

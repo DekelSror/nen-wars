@@ -1,11 +1,12 @@
 import { NenSkillName } from "../NenDetails"
 import { NenSkill } from "../NenSkills"
+import { NenSkillBase } from "../NenSkills/NenSkillBase"
 import NenUser from "../NenUser"
 import { NenBattleAction, PhysicalBattleAction } from "./Engine"
 
 
 
-export type NenBattleSkill = NenSkill & {
+export type NenBattleSkill = NenSkillBase & {
     power: number
 }
 
@@ -48,7 +49,7 @@ export class NenBattler {
     }
 
     get totalAuraCost() {
-        return this.activeSkills.reduce((total, s) => total + s.costPerRound, 0)
+        return this.activeSkills.reduce((total, s) => total + s.auraUsage, 0)
     }
 
     get activeSkills() {
@@ -69,13 +70,13 @@ export class NenBattler {
         return this.battlePhysicalSkill['hit'] + hitModifier + power
     }
 
-    modifiers: (skill: NenBattleSkill) => ({hit: number, block: number, advance: number, retreat: number}) = skill => {
+    modifiers: (skill: NenBattleSkill) => ({[k: string]: number}) = skill => {
         switch (skill.name) {
             case 'gyo':
                 const gyoSkill = this.activeSkills.find(s => s.name === 'gyo')
                 if (gyoSkill) {
                     // have a function instead of +
-                    return {hit: skill.rank + skill.power, block: 0, advance: 0, retreat: 0}
+                    return gyoSkill.effectOnPhysicalSkill
                 } else {
                     return {hit: 0, block: 0, advance: 0, retreat: 0}
                 }

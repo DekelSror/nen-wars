@@ -22,8 +22,9 @@ class NenEngine implements GameEngine{
 
     generatePlayer(user: NenUser){
         const skills = user.skills
-        const defense = this.clacZetsu(skills["zetsu"].rank)
-        const hit = this.clacZetsu(skills["ten"].rank)
+        const defense = this.clacZetsu(skills["gyo"].effectOnPhysicalSkill['block'])
+        const hit = this.clacZetsu(skills["gyo"].effectOnPhysicalSkill['hit'])
+        // const hit = this.clacZetsu(skills["ten"].rank)
 
         return new NenBattler(hit, defense, user)
     }

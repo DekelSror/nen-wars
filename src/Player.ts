@@ -39,7 +39,7 @@ export class HumanPlayer extends Player {
         const uIndex = this.collection.findIndex(u => u.name === user.name)
 
         this.balance -= cost
-        this.collection[uIndex].skills[skillName].rank++
+        this.collection[uIndex].skills[skillName].upgradeAuraUsage(1.4)
     }
 
     upgradeAuraType(user: NenUser, auraTypeName: AuraTypeName, cost: number) {
