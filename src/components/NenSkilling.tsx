@@ -1,5 +1,5 @@
 import { NenSkillName } from "../NenDetails"
-import { NenSkill } from "../NenSkills"
+import { NenSkill } from "../NenSkills/NenSkills"
 import { NenSkillBase } from "../NenSkills/NenSkillBase"
 import NenUser from "../NenUser"
 

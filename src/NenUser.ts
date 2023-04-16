@@ -1,15 +1,22 @@
 import { AuraType, makeAuraTypes } from "./AuraType"
+import { NenSkillDict } from "./Game/NenBattler"
 import nenDetails, { AuraTypeName, NenSkillName } from "./NenDetails"
-import { NenSkill, makeSkills } from "./NenSkills"
+import { NenSkill, makeSkills } from "./NenSkills/NenSkills"
 import { NenSkillBase } from "./NenSkills/NenSkillBase"
-import { PhysicalSkill } from "./PhysicalSkills"
+import { PhysicalSkill, PhysicalSkillName } from "./PhysicalSkills"
+
+
 
 class NenUser {
     name: string
     auraTypeAffinity: AuraTypeName
-    skills: {[k: string]: NenSkillBase}//skills: {[k: string]: NenSkill}
+    skills: NenSkillDict<NenSkill>
     auraTypes: {[k: string]: AuraType}
-    physicalSkills: {[k: string]: PhysicalSkill}
+    physicalSkills: {
+        stamina: PhysicalSkill
+        aerobic: PhysicalSkill
+        unaerobic: PhysicalSkill
+    }
     
     maxAura = 5
 
@@ -19,10 +26,10 @@ class NenUser {
         this.skills = makeSkills()
         this.auraTypes = makeAuraTypes()
         this.physicalSkills = {
-            erobic: {name: "erobic", rank: 5, costPerRound: 2},
-            anerobic: {name: "anerobic", rank: 2, costPerRound: 4}
+            stamina: {name: 'stamina', rank: 3, costPerRound: 2},
+            aerobic: {name: "aerobic", rank: 5, costPerRound: 2},
+            unaerobic: {name: "anaerobic", rank: 2, costPerRound: 4}
         }
-            
     }
 
     get skillables() {
@@ -35,7 +42,10 @@ class NenUser {
 
         for (const name of basesNames) {
             if (!name) continue
-            if (this.skills[name].effectOnPhysicalSkill['hit'] < 3) {
+
+            const skill = this.skills[name as NenSkillName]
+
+            if (skill.rank < 3) {
                 return false
             }
         }
